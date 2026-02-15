@@ -6,6 +6,7 @@
     <title>Mariage Justin & Khady</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* Styles inchangés */
         * {
             margin: 0;
             padding: 0;
@@ -88,7 +89,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: center 20%; /* Ajustez ce pourcentage pour descendre l'image */
+            object-position: center 20%;
             display: block;
             pointer-events: none;
         }
@@ -283,24 +284,25 @@
         « Un mariage, c'est l'histoire de deux âmes qui décident de ne faire qu'une. Nous sommes impatients de célébrer cet amour avec vous. »
     </div>
 
+    <!-- Photos dans l'ordre : mariée, couple, marié -->
     <div class="photos-grid">
-        <div class="photo-card" data-category="groom" id="photoGroom">
+        <div class="photo-card" data-category="bride" id="photoBride">
             <div class="img-wrapper">
-                <img src="Photo_Alexis.jpg" alt="Justin & ami">
+                <img src="Photo_Alexis.jpg" alt="Khady & amie">
             </div>
-            <div class="category">Ami du marié</div>
+            <div class="category">Proches de la mariée</div>
         </div>
         <div class="photo-card" data-category="couple" id="photoCouple">
             <div class="img-wrapper">
                 <img src="Photo_Alexis.jpg" alt="Justin & Khady">
             </div>
-            <div class="category">Ami du couple</div>
+            <div class="category">Proches du couple</div>
         </div>
-        <div class="photo-card" data-category="bride" id="photoBride">
+        <div class="photo-card" data-category="groom" id="photoGroom">
             <div class="img-wrapper">
-                <img src="Photo_Alexis.jpg" alt="Khady & amie">
+                <img src="Photo_Alexis.jpg" alt="Justin & ami">
             </div>
-            <div class="category">Ami de la mariée</div>
+            <div class="category">Proches du marié</div>
         </div>
     </div>
 
@@ -312,11 +314,12 @@
 
     <div class="dynamic-section" id="dynamicSection">
         <div class="confirmation-card">
-            <div class="category-badge" id="currentCategoryLabel">Ami du marié</div>
+            <div class="category-badge" id="currentCategoryLabel">Proches de la mariée</div>
             <form id="rsvpForm" class="rsvp-form">
                 <input type="text" id="name" placeholder="Prénom & Nom" required>
                 <input type="tel" id="phone" placeholder="Téléphone" required>
-                <input type="number" id="guests" min="1" max="10" value="1" required>
+                <!-- Plus de valeur par défaut, juste le placeholder -->
+                <input type="number" id="guests" min="1" max="10" placeholder="Nombre de personnes" required>
                 <button type="submit">Confirmer ma présence</button>
                 <div id="formSuccess" class="success-message">✓ Merci ! Votre réponse a été enregistrée.</div>
             </form>
@@ -375,23 +378,26 @@
         const successDiv = document.getElementById('formSuccess');
 
         function setCategory(cat) {
-            if (cat === 'groom') categoryLabel.textContent = 'Ami du marié';
-            else if (cat === 'couple') categoryLabel.textContent = 'Ami du couple';
-            else if (cat === 'bride') categoryLabel.textContent = 'Ami de la mariée';
+            if (cat === 'bride') categoryLabel.textContent = 'Proches de la mariée';
+            else if (cat === 'couple') categoryLabel.textContent = 'Proches du couple';
+            else if (cat === 'groom') categoryLabel.textContent = 'Proches du marié';
             rsvpForm.dataset.category = cat;
         }
 
-        document.getElementById('photoGroom').addEventListener('click', () => {
-            setCategory('groom');
+        document.getElementById('photoBride').addEventListener('click', () => {
+            setCategory('bride');
             dynamicSection.style.display = 'block';
+            dynamicSection.scrollIntoView({ behavior: 'smooth' });
         });
         document.getElementById('photoCouple').addEventListener('click', () => {
             setCategory('couple');
             dynamicSection.style.display = 'block';
+            dynamicSection.scrollIntoView({ behavior: 'smooth' });
         });
-        document.getElementById('photoBride').addEventListener('click', () => {
-            setCategory('bride');
+        document.getElementById('photoGroom').addEventListener('click', () => {
+            setCategory('groom');
             dynamicSection.style.display = 'block';
+            dynamicSection.scrollIntoView({ behavior: 'smooth' });
         });
 
         rsvpForm.addEventListener('submit', function(e) {
@@ -412,16 +418,20 @@
             responses[cat].push(entry);
             saveToStorage();
             successDiv.style.display = 'block';
+            // Réinitialiser tous les champs (y compris nombre de places)
             nameInput.value = '';
             phoneInput.value = '';
-            guestsInput.value = 1;
+            guestsInput.value = '';
             setTimeout(() => successDiv.style.display = 'none', 3000);
         });
 
-        // Export CSV via le lien "Merci"
         document.getElementById('exportLink').addEventListener('click', function() {
             let csvContent = "Catégorie,Nom complet,Téléphone,Nombre de places,Date de confirmation\n";
-            const catMap = { groom: 'Ami du marié', couple: 'Ami du couple', bride: 'Ami de la mariée' };
+            const catMap = {
+                bride: 'Proches de la mariée',
+                couple: 'Proches du couple',
+                groom: 'Proches du marié'
+            };
             Object.keys(responses).forEach(cat => {
                 const catLabel = catMap[cat];
                 responses[cat].forEach(entry => {
@@ -445,5 +455,3 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💒</text></svg>">
 </body>
 </html>
-
-
