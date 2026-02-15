@@ -416,19 +416,13 @@
         const guestsInput = document.getElementById('guests');
         const successDiv = document.getElementById('formSuccess');
 
-        let currentCategory = 'groom'; // par défaut
-
-        // Mise à jour du label et du dataset du formulaire
         function setCategory(cat) {
-            currentCategory = cat;
             if (cat === 'groom') categoryLabel.textContent = 'Ami du marié';
             else if (cat === 'couple') categoryLabel.textContent = 'Ami du couple';
             else if (cat === 'bride') categoryLabel.textContent = 'Ami de la mariée';
-            // On peut aussi stocker la catégorie dans un attribut data du formulaire
             rsvpForm.dataset.category = cat;
         }
 
-        // Gestionnaires de clic sur les photos
         document.getElementById('photoGroom').addEventListener('click', () => {
             setCategory('groom');
             dynamicSection.style.display = 'block';
@@ -446,7 +440,7 @@
         rsvpForm.addEventListener('submit', function(e) {
             e.preventDefault();
 
-            const cat = rsvpForm.dataset.category; // 'groom', 'couple', 'bride'
+            const cat = rsvpForm.dataset.category;
             if (!cat || !responses.hasOwnProperty(cat)) {
                 alert('Erreur : catégorie inconnue');
                 return;
@@ -461,60 +455,39 @@
                 return;
             }
 
-            const entry = {
-                fullname,
-                phone,
-                guests,
-                timestamp: new Date().toISOString()
-            };
-
+            const entry = { fullname, phone, guests, timestamp: new Date().toISOString() };
             responses[cat].push(entry);
             saveToStorage();
 
-            // Afficher message succès
             successDiv.style.display = 'block';
-            // Réinitialiser le formulaire (sauf nombre de places =1)
             nameInput.value = '';
             phoneInput.value = '';
             guestsInput.value = 1;
-
-            setTimeout(() => {
-                successDiv.style.display = 'none';
-            }, 3000);
-
-            console.log(`Ajouté à ${cat} :`, entry);
+            setTimeout(() => successDiv.style.display = 'none', 3000);
         });
 
-        // ---------- EXPORT CSV (caché, accessible par double-clic sur le titre) ----------
+        // ---------- EXPORT CSV (DOUBLE-CLIC SUR LE TITRE) ----------
         const exportBtn = document.getElementById('exportBtn');
         const heroTitle = document.getElementById('heroTitle');
 
-        // Double-clic sur le titre pour afficher le bouton d'export
+        // Un seul gestionnaire de double-clic
         heroTitle.addEventListener('dblclick', function() {
-            exportBtn.style.display = 'inline-block';
-            // Optionnel : le cacher après 10 secondes ? Non, on le laisse visible une fois activé.
+            console.log('Double-clic détecté'); // Pour debug (ouvrez F12 pour voir)
+            if (exportBtn.style.display === 'inline-block') {
+                exportBtn.style.display = 'none';
+            } else {
+                exportBtn.style.display = 'inline-block';
+            }
         });
 
-        // Fonction d'export CSV
         function exportToCSV() {
             let csvContent = "Catégorie,Nom complet,Téléphone,Nombre de places,Date de confirmation\n";
-
-            const catMap = {
-                groom: 'Ami du marié',
-                couple: 'Ami du couple',
-                bride: 'Ami de la mariée'
-            };
+            const catMap = { groom: 'Ami du marié', couple: 'Ami du couple', bride: 'Ami de la mariée' };
 
             Object.keys(responses).forEach(cat => {
                 const catLabel = catMap[cat];
                 responses[cat].forEach(entry => {
-                    const line = [
-                        `"${catLabel}"`,
-                        `"${entry.fullname}"`,
-                        `"${entry.phone}"`,
-                        entry.guests,
-                        `"${new Date(entry.timestamp).toLocaleString('fr-FR')}"`
-                    ].join(',');
+                    const line = `"${catLabel}","${entry.fullname}","${entry.phone}",${entry.guests},"${new Date(entry.timestamp).toLocaleString('fr-FR')}"`;
                     csvContent += line + '\n';
                 });
             });
@@ -531,26 +504,14 @@
         }
 
         exportBtn.addEventListener('click', exportToCSV);
-
-        // Optionnel : si l'admin veut re-cacher le bouton, on peut ajouter un clic dessus pour le cacher ? 
-        // On peut faire simple : le bouton reste visible une fois activé, mais l'admin peut rafraîchir la page.
-        // Pour plus de discrétion, on peut permettre de le cacher en recliquant sur le titre ? 
-        // Je vais ajouter un double-clic pour le masquer également.
-        heroTitle.addEventListener('dblclick', function() {
-            if (exportBtn.style.display === 'inline-block') {
-                exportBtn.style.display = 'none';
-            } else {
-                exportBtn.style.display = 'inline-block';
-            }
-        });
     })();
 </script>
-
 <!-- favicon -->
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💒</text></svg>">
 </body>
 
 </html>
+
 
 
 
