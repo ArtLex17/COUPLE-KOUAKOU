@@ -27,11 +27,9 @@
             width: 100%;
         }
 
-        /* Noms des mariés - grands et élégants */
         .hero {
             text-align: center;
             margin-bottom: 2rem;
-            cursor: pointer; /* pour indiquer le double-clic (admin) */
         }
         .hero h1 {
             font-size: 4.5rem;
@@ -46,7 +44,6 @@
             font-weight: 300;
         }
 
-        /* Message de motivation */
         .message-motivation {
             background: #ffffffdb;
             padding: 1.8rem;
@@ -59,7 +56,6 @@
             text-align: center;
         }
 
-        /* Grille des trois photos cliquables */
         .photos-grid {
             display: flex;
             flex-wrap: wrap;
@@ -92,9 +88,9 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: center 3%;
+            object-position: center 20%; /* Ajustez ce pourcentage pour descendre l'image */
             display: block;
-            pointer-events: none; /* pour que le clic passe à la carte */
+            pointer-events: none;
         }
         .photo-card .category {
             font-size: 1.7rem;
@@ -108,7 +104,6 @@
             box-shadow: 0 4px 8px #e9d5c6;
         }
 
-        /* Message des mariés (sous les photos) */
         .message-couple {
             background: #fef9f4;
             padding: 2rem;
@@ -132,7 +127,6 @@
             color: #6b4f44;
         }
 
-        /* Zone dynamique (formulaire + réception) masquée initialement */
         .dynamic-section {
             display: none;
             margin: 3rem 0 2rem;
@@ -199,7 +193,6 @@
             display: none;
         }
 
-        /* Section réception */
         .reception-section {
             background: #fffaf5;
             border-radius: 50px;
@@ -260,26 +253,6 @@
             object-fit: contain;
         }
 
-        /* Bouton export caché (visible seulement après double-clic sur le titre) */
-        .export-btn {
-            background: #fff;
-            border: 2px solid #dbb6a8;
-            color: #5e3e36;
-            padding: 0.7rem 1.8rem;
-            border-radius: 40px;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: 0.2s;
-            box-shadow: 0 5px 10px #e5cfc0;
-            display: none; /* caché par défaut */
-            margin: 2rem auto 0;
-        }
-        .export-btn:hover {
-            background: #b76e79;
-            color: white;
-            border-color: #b76e79;
-        }
         .footer-note {
             text-align: center;
             margin-top: 3rem;
@@ -287,22 +260,29 @@
             border-top: 2px dotted #dccbbd;
             padding-top: 2rem;
         }
+        #exportLink {
+            font-size: 0.8rem;
+            opacity: 0.5;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            margin-top: 0.5rem;
+        }
+        #exportLink:hover {
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
 <div class="container">
-    <!-- Noms des mariés (grand) avec double-clic pour admin -->
     <div class="hero" id="heroTitle">
         <h1>Justin <span>&</span> Khady</h1>
     </div>
 
-    <!-- Message de motivation -->
     <div class="message-motivation">
         <i class="fas fa-heart" style="color:#b76e79; margin-right: 12px;"></i> 
         « Un mariage, c'est l'histoire de deux âmes qui décident de ne faire qu'une. Nous sommes impatients de célébrer cet amour avec vous. »
     </div>
 
-    <!-- Les trois photos cliquables -->
     <div class="photos-grid">
         <div class="photo-card" data-category="groom" id="photoGroom">
             <div class="img-wrapper">
@@ -324,16 +304,13 @@
         </div>
     </div>
 
-    <!-- Message des mariés -->
     <div class="message-couple">
         <p>✨ Chers parents, amis, complices,</p>
         <p>Votre présence à nos côtés sera le plus beau des cadeaux. Nous avons hâte de partager cette journée unique avec vous, de danser, rire et créer des souvenirs inoubliables. Merci de faire partie de notre histoire.</p>
         <div class="signature">— Justin & Khady</div>
     </div>
 
-    <!-- SECTION DYNAMIQUE (cachée au départ) -->
     <div class="dynamic-section" id="dynamicSection">
-        <!-- Formulaire de confirmation (change selon la catégorie) -->
         <div class="confirmation-card">
             <div class="category-badge" id="currentCategoryLabel">Ami du marié</div>
             <form id="rsvpForm" class="rsvp-form">
@@ -345,7 +322,6 @@
             </form>
         </div>
 
-        <!-- Réception -->
         <div class="reception-section">
             <h2><i class="fas fa-map-marker-alt"></i> Lieu de réception</h2>
             <div class="address-block">
@@ -355,39 +331,22 @@
                 <p><i class="far fa-clock"></i> Samedi 24 mai 2025 · Accueil dès 16h, cérémonie 17h</p>
             </div>
             <div class="map-links">
-                <a href="https://www.google.com/maps/search/?api=1&query=Domaine+de+l'Orangerie+Abidjan" target="_blank" class="app-button">
-                    <img src="https://img.icons8.com/color/48/000000/google-maps.png" alt="Google Maps">
-                    <span>Google Maps</span>
-                </a>
-                <a href="https://maps.yango.com/?ll=-4.0123%2C5.3456&z=17&text=Domaine%20de%20l%27Orangerie" target="_blank" class="app-button">
-                    <img src="https://play-lh.googleusercontent.com/CE60CM92zHfU9PoEVyMZ1g8TewM-YjZbms95z1TOhO2RgnJX6JgB9TICZqMcdNf4ww" alt="Yango" style="border-radius: 8px;">
-                    <span>Yango</span>
-                </a>
-                <a href="https://indrive.com/en/trip" target="_blank" class="app-button">
-                    <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple126/v4/84/6b/35/846b3581-dbda-c0c1-c6ab-bf3630a746fc/AppIcon-1x_U007emarketing-0-7-0-0-85-220.png/230x0w.webp" alt="InDrive">
-                    <span>InDrive</span>
-                </a>
-                <a href="https://m.uber.com/ul/?action=setPickup&client_id=&pickup=my_location&dropoff[formatted_address]=Domaine%20de%20l'Orangerie%20Abidjan&dropoff[latitude]=5.3456&dropoff[longitude]=-4.0123" target="_blank" class="app-button">
-                    <i class="fab fa-uber" style="color:#000; font-size: 1.6rem;"></i>
-                    <span>Uber</span>
-                </a>
+                <a href="https://www.google.com/maps/search/?api=1&query=Domaine+de+l'Orangerie+Abidjan" target="_blank" class="app-button"><img src="https://img.icons8.com/color/48/000000/google-maps.png" alt="Google Maps"><span>Google Maps</span></a>
+                <a href="https://maps.yango.com/?ll=-4.0123%2C5.3456&z=17&text=Domaine%20de%20l%27Orangerie" target="_blank" class="app-button"><img src="https://play-lh.googleusercontent.com/CE60CM92zHfU9PoEVyMZ1g8TewM-YjZbms95z1TOhO2RgnJX6JgB9TICZqMcdNf4ww" alt="Yango" style="border-radius: 8px;"><span>Yango</span></a>
+                <a href="https://indrive.com/en/trip" target="_blank" class="app-button"><img src="https://is1-ssl.mzstatic.com/image/thumb/Purple126/v4/84/6b/35/846b3581-dbda-c0c1-c6ab-bf3630a746fc/AppIcon-1x_U007emarketing-0-7-0-0-85-220.png/230x0w.webp" alt="InDrive"><span>InDrive</span></a>
+                <a href="https://m.uber.com/ul/?action=setPickup&client_id=&pickup=my_location&dropoff[formatted_address]=Domaine%20de%20l'Orangerie%20Abidjan&dropoff[latitude]=5.3456&dropoff[longitude]=-4.0123" target="_blank" class="app-button"><i class="fab fa-uber" style="color:#000; font-size: 1.6rem;"></i><span>Uber</span></a>
             </div>
         </div>
     </div>
 
-    <!-- Bouton export (caché, apparaît après double-clic sur le titre) -->
-    <button id="exportBtn" class="export-btn"><i class="fas fa-download"></i> Télécharger les réponses (CSV)</button>
-
-    <!-- Footer simple -->
     <div class="footer-note">
         <p><i class="far fa-heart"></i> Justin & Khady <i class="far fa-heart"></i></p>
+        <p id="exportLink">Merci</p>
     </div>
 </div>
 
-<!-- JavaScript -->
 <script>
     (function() {
-        // ---------- GESTION DU STOCKAGE ----------
         const STORAGE_KEY = 'wedding_rsvp_by_category';
         let responses = { groom: [], couple: [], bride: [] };
 
@@ -407,7 +366,6 @@
         }
         loadFromStorage();
 
-        // ---------- AFFICHAGE DYNAMIQUE AU CLIC SUR PHOTO ----------
         const dynamicSection = document.getElementById('dynamicSection');
         const categoryLabel = document.getElementById('currentCategoryLabel');
         const rsvpForm = document.getElementById('rsvpForm');
@@ -436,29 +394,23 @@
             dynamicSection.style.display = 'block';
         });
 
-        // ---------- SOUMISSION DU FORMULAIRE ----------
         rsvpForm.addEventListener('submit', function(e) {
             e.preventDefault();
-
             const cat = rsvpForm.dataset.category;
             if (!cat || !responses.hasOwnProperty(cat)) {
                 alert('Erreur : catégorie inconnue');
                 return;
             }
-
             const fullname = nameInput.value.trim();
             const phone = phoneInput.value.trim();
             const guests = parseInt(guestsInput.value, 10);
-
             if (!fullname || !phone || !guests || guests < 1) {
                 alert('Merci de remplir tous les champs correctement.');
                 return;
             }
-
             const entry = { fullname, phone, guests, timestamp: new Date().toISOString() };
             responses[cat].push(entry);
             saveToStorage();
-
             successDiv.style.display = 'block';
             nameInput.value = '';
             phoneInput.value = '';
@@ -466,24 +418,10 @@
             setTimeout(() => successDiv.style.display = 'none', 3000);
         });
 
-        // ---------- EXPORT CSV (DOUBLE-CLIC SUR LE TITRE) ----------
-        const exportBtn = document.getElementById('exportBtn');
-        const heroTitle = document.getElementById('heroTitle');
-
-        // Un seul gestionnaire de double-clic
-        heroTitle.addEventListener('dblclick', function() {
-            console.log('Double-clic détecté'); // Pour debug (ouvrez F12 pour voir)
-            if (exportBtn.style.display === 'inline-block') {
-                exportBtn.style.display = 'none';
-            } else {
-                exportBtn.style.display = 'inline-block';
-            }
-        });
-
-        function exportToCSV() {
+        // Export CSV via le lien "Merci"
+        document.getElementById('exportLink').addEventListener('click', function() {
             let csvContent = "Catégorie,Nom complet,Téléphone,Nombre de places,Date de confirmation\n";
             const catMap = { groom: 'Ami du marié', couple: 'Ami du couple', bride: 'Ami de la mariée' };
-
             Object.keys(responses).forEach(cat => {
                 const catLabel = catMap[cat];
                 responses[cat].forEach(entry => {
@@ -491,7 +429,6 @@
                     csvContent += line + '\n';
                 });
             });
-
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a');
             const url = URL.createObjectURL(blob);
@@ -501,22 +438,10 @@
             link.click();
             document.body.removeChild(link);
             URL.revokeObjectURL(url);
-        }
-
-        exportBtn.addEventListener('click', exportToCSV);
+        });
     })();
 </script>
-<!-- favicon -->
+
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💒</text></svg>">
 </body>
-
 </html>
-
-
-
-
-
-
-
-
-
